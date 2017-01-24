@@ -6,23 +6,22 @@ client.on("message", msg => {
 	let prefix = "/";
   let expression = new RegExp(/^(\/roll ([0-9][ygbprkf][ ]*)+)$/g);
 
-
   let symbols = {
-    'Success': '<:Success:273177002176151552>',
-    'Advantage': '<:Advantage:273176960568393728>',
-    'Failure': '<:Failure:273176991790792715>',
-    'Threat': '<:Threat:273177009943740426>',
-    'Triumph': '<:Triumph:273177018013581313>',
-    'Despair': '<:Despair:273176982274179073>',
-    'Black': '<:Darkside:273266259003441163>',
-    'White': '<:Lightside:273266185540206593>',
+    'Success': '<:success:273460303755214848>',
+    'Advantage': '<:advantage:273460264039612416>',
+    'Failure': '<:failure:273460289326940171>',
+    'Threat': '<:threat:273460313071026186>',
+    'Triumph': '<:triumph:273460319366545409>',
+    'Despair': '<:despair:273460282309738496>',
+    'Black': '<:darkside:273460274055348225>',
+    'White': '<:lightside:273460296981413888>',
     'Blank': '',
   }
 
 	let diceArray = {
 	  'g': {
       'sides':8,
-      'emoji':'<:abilitybg:273177167590850562>',
+      'emoji':'<:abilitybg:273460177762648074>',
       'faces':{
         1: 'Blank',
         2: 'Success',
@@ -35,7 +34,7 @@ client.on("message", msg => {
     },
 	  'y': {
       'sides':12,
-      'emoji':'<:proficiencybg:273177225820635137>',
+      'emoji':'<:proficiencybg:273460214743695360>',
       'faces':{
         1: 'Blank',
         2: 'Success',
@@ -52,7 +51,7 @@ client.on("message", msg => {
     },
 	  'b': {
       'sides':6,
-      'emoji':'<:boostbg:273177190039027714>',
+      'emoji':'<:boostbg:273460186272759808>',
       'faces':{
         1: 'Blank',
         2: 'Blank',
@@ -64,7 +63,7 @@ client.on("message", msg => {
     },
 	  'p': {
       'sides':8,
-      'emoji':'<:difficultybg:273177208749686784>',
+      'emoji':'<:difficultybg:273460199862435841>',
       'faces':{
         1: 'Blank',
         2: 'Failure',
@@ -77,7 +76,7 @@ client.on("message", msg => {
     },
 	  'r': {
       'sides':12,
-      'emoji':'<:challengebg:273177199224291329>',
+      'emoji':'<:challengebg:273460192811810817>',
       'faces':{
         1: 'Blank',
         2: 'Failure',
@@ -94,7 +93,7 @@ client.on("message", msg => {
       },
 	  'k': {
       'sides':6,
-      'emoji':'<:setbackbg:273177234783600644>',
+      'emoji':'<:setbackbg:273460221458907136>',
       'faces':{
         1: 'Blank',
         2: 'Blank',
@@ -106,7 +105,7 @@ client.on("message", msg => {
       },
 	  'f': {
       'sides':12,
-      'emoji':'<:forcebg:273177217067122695>',
+      'emoji':'<:forcebg:273460207546400769>',
       'faces':{
         1: 'Black',
         2: 'Black',
@@ -145,7 +144,6 @@ client.on("message", msg => {
     		var thisDieType = requestedRolls[x].slice(-1);
     		numSides = diceArray[thisDieType].sides;
     		numDice = requestedRolls[x].substring(0, requestedRolls[x].length - 1);
-        // console.log(numDice);
 
     		for(var y=0;y<numDice;y++){
     			var numberRolledOnDie = Math.floor((Math.random() * numSides) + 1);
@@ -179,7 +177,18 @@ client.on("message", msg => {
         }
       }
 
-      msg.channel.sendMessage(msg.author + ' rolled ' + printString);
+      if (printString.length < 2000){
+        msg.channel.sendMessage(msg.author + ' rolled ' + printString);
+      }
+      else{
+
+        //handle this a little different than what's below. Check before concat'ing print strings so see if the total would be more than 2000. If yes, print the dice, then the 'for a net' then the pool. 
+
+        // printString1 = first half of print string
+        // printString2 = second half of print string
+        // msg.channel.sendMessage(msg.author + ' rolled ' + printString1);
+        // msg.channel.sendMessage(printString2);
+      }
 
     }
 });
