@@ -1,5 +1,15 @@
 # swdice-discord
 
+##TL;DR
+
+1. [Create a Discord Application](https://discordapp.com/developers/applications/me)
+2. Create a Discord Bot
+3. Add Bot to Server
+4. [Clone code and install Node](https://nodejs.org/en/download/)
+5. Add emoji to Server
+6. Update emoji ID's 
+7. Run bot
+
 ## Step 1: Create your App
 
 First thing's first. You're going to need to create a Discord app. The app allows creation of a Bot, which can make calls to the Discord API. 
