@@ -4,6 +4,8 @@ var client = new Discord.Client();
 client.on("message", msg => {
 
 	let prefix = "/";
+  let expression = new RegExp(/^(\/roll ([0-9][ygbprkf][ ]*)+)$/g);
+
 
   let symbols = {
     'Success': '<:Success:273177002176151552>',
@@ -11,9 +13,10 @@ client.on("message", msg => {
     'Failure': '<:Failure:273176991790792715>',
     'Threat': '<:Threat:273177009943740426>',
     'Triumph': '<:Triumph:273177018013581313>',
-    'Dispair': '',
-    'Black': '',
-    'White': ''
+    'Despair': '<:Despair:273176982274179073>',
+    'Black': '<:Darkside:273266259003441163>',
+    'White': '<:Lightside:273266185540206593>',
+    'Blank': '',
   }
 
 	let diceArray = {
@@ -123,11 +126,15 @@ client.on("message", msg => {
 
 	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
+  if (msg.content.search(expression) == -1){
+    msg.channel.sendMessage(msg.author + ' That\'s not a valid command. Please use only 1 - 9 and g y b p r k f. \nEx: \'/roll 1y 2g 3p\'');
+    return;
+  }
+
 	if (msg.content.startsWith(prefix + "roll")){
     //Trim out the /roll command and split each die type and count into an array
     var temp = msg.content.replace('/roll ','');
 		var requestedRolls = temp.split(' ');
-    console.log(requestedRolls);
 
     var symbolPool = [];
     var rolledDiePool = [];
@@ -138,7 +145,7 @@ client.on("message", msg => {
     		var thisDieType = requestedRolls[x].slice(-1);
     		numSides = diceArray[thisDieType].sides;
     		numDice = requestedRolls[x].substring(0, requestedRolls[x].length - 1);
-        console.log(numDice);
+        // console.log(numDice);
 
     		for(var y=0;y<numDice;y++){
     			var numberRolledOnDie = Math.floor((Math.random() * numSides) + 1);
@@ -147,25 +154,31 @@ client.on("message", msg => {
           var splitDieValue = dieValue.split(' ');
           for(var xx=0;xx<splitDieValue.length;xx++){
             symbolPool.push(splitDieValue[xx]);
-            thisDieText += symbols[splitDieValue[xx]] + ' ';
+            thisDieText += symbols[splitDieValue[xx]];
           }
           rolledDiePool.push(thisDieText);
-          //Comment this line out when we're done.
-          // msg.channel.sendMessage(msg.author + ' rolled ' + thisDieText);
     		}
-
-        var settledSymbols = settleSymbolPool(symbolPool);
-        console.log(settledSymbols);
-
-        //do the calc to get totals for each number. Than you're done!
 
     		var printString = '';
 
     		for(var z=0;z<rolledDiePool.length;z++){
-    			printString += rolledDiePool[z] + '  ';
+    			printString += rolledDiePool[z] + '   ';
     		}
 
     	}
+
+      printString += '\nfor a net\n';
+
+      var settledSymbols = settleSymbolPool(symbolPool);
+
+      for(var key in settledSymbols){
+        if(settledSymbols[key] != 0){
+          for(var yy=0;yy<settledSymbols[key];yy++){
+            printString += symbols[key];
+          }
+        }
+      }
+
       msg.channel.sendMessage(msg.author + ' rolled ' + printString);
 
     }
@@ -176,13 +189,12 @@ client.on('ready', () => {
 });
 
 function settleSymbolPool(symbolPool){
-
   var numSuccess = 0;
   var numFailure = 0;
   var numAdvantage = 0;
   var numThreat = 0;
   var numTriumph = 0;
-  var numDispair = 0;
+  var numDespair = 0;
   var numBlack = 0;
   var numWhite = 0;
 
@@ -202,8 +214,8 @@ function settleSymbolPool(symbolPool){
     else if(symbolPool[x] == 'Triumph'){
       numTriumph += 1;
     }
-    else if(symbolPool[x] == 'Dispair'){
-      numDispair += 1;
+    else if(symbolPool[x] == 'Despair'){
+      numDespair += 1;
     }
     else if(symbolPool[x] == 'Black'){
       numBlack += 1;
@@ -214,11 +226,11 @@ function settleSymbolPool(symbolPool){
   }
 
   if(numSuccess > numFailure){
-    numSuccess =- numFailure;
+    numSuccess -= numFailure;
     numFailure = 0;
   }
-  else if(numFailure < numSuccess){
-    numFailure =- numSuccess;
+  else if(numFailure > numSuccess){
+    numFailure -= numSuccess;
     numSuccess = 0;
   }
   else{
@@ -227,11 +239,11 @@ function settleSymbolPool(symbolPool){
   }
 
   if(numAdvantage > numThreat){
-    numAdvantage =- numThreat;
+    numAdvantage -= numThreat;
     numThreat = 0;
   }
-  else if(numThreat < numAdvantage){
-    numThreat =- numAdvantage;
+  else if(numThreat > numAdvantage){
+    numThreat -= numAdvantage;
     numAdvantage = 0;
   }
   else{
@@ -245,11 +257,11 @@ function settleSymbolPool(symbolPool){
     'Triumph': numTriumph,
     'Failure': numFailure,
     'Threat': numThreat,
-    'Dispair': numDispair,
+    'Despair': numDespair,
     'White': numWhite,
     'Black': numBlack
   };
 
 }
 
-client.login("MjczMTY0NzM0MDU0NzkzMjE3.C2fmtA.slHxBLY0gOoa6UgwgaREDJ0inKA");
+client.login("");
