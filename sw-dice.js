@@ -1,3 +1,5 @@
+"use strict";
+
 var Discord = require("discord.js");
 var staticValues = require("./staticValues.js");
 var client = new Discord.Client();
@@ -30,8 +32,8 @@ client.on("message", msg => {
     	for (var x=0;x<requestedRolls.length;x++){
         //thisDieType = y,g,b,p,r,k or f
     		var thisDieType = requestedRolls[x].slice(-1);
-    		numSides = staticValues.diceArray[thisDieType].sides;
-    		numDice = requestedRolls[x].substring(0, requestedRolls[x].length - 1);
+    		var numSides = staticValues.diceArray[thisDieType].sides;
+    		var numDice = requestedRolls[x].substring(0, requestedRolls[x].length - 1);
 
     		for(var y=0;y<numDice;y++){
     			var numberRolledOnDie = Math.floor((Math.random() * numSides) + 1);
