@@ -5,28 +5,28 @@ var client = new Discord.Client();
 client.on("message", msg => {
 
 	let prefix = "/";
-  let expression = new RegExp(/^(\/roll ([0-9][ygbprkf][ ]*)+)$/g);
-  //limit spaces to one space between commands. Trim spaces from front and end.
+  let rollConstraints = new RegExp(/^(\/ro?l?l? ([0-9][ygbprkf][ ]*)+)$/g);
+  let dieConstraints = new RegExp(/(\d+[ygbprkf])/g);
 
 	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
-  if (msg.content.search(expression) == -1){
+  if (msg.content.search(rollConstraints) == -1){
     msg.channel.sendMessage(msg.author + ' That\'s not a valid command. Please use only 1 - 9 and g y b p r k f. \nEx: \'/roll 1y 2g 3p\'');
     return;
   }
 
-	if (msg.content.startsWith(prefix + "roll")){
-    //add ability to have /r in addition to /roll
-    //Trim out the /roll command and split each die type and count into an array
-    var temp = msg.content.replace('/roll ','');
-		var requestedRolls = temp.split(' ');
+	if (msg.content.startsWith(prefix + "roll") || msg.content.startsWith(prefix + 'r')){
+    //Trim out the /roll command and split each die type and number of die to roll into an array
 
-    console.log(requestedRolls);
+    var incomingRollCommand = msg.content.replace('/roll ', '').replace('/r ', '');
+
+    var requestedRolls = incomingRollCommand.match(dieConstraints);
 
     var symbolPool = [];
     var rolledDiePool = [];
 
       //itterate on that array
+      // this whole thing needs to be rewirtten. 
     	for (var x=0;x<requestedRolls.length;x++){
         //thisDieType = y,g,b,p,r,k or f
     		var thisDieType = requestedRolls[x].slice(-1);
