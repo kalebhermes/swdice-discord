@@ -8,22 +8,70 @@ var client = new Discord.Client();
 client.on("message", msg => {
 
   let prefix = "/";
-  let rollConstraints = new RegExp(/^(\/ro?l?l? ([0-9][ygbprkf][ ]*)+)$/g);
-  let dieConstraints = new RegExp(/(\d+[ygbprkf])/g);
+  let starWarsRollConstraints = new RegExp(/^(\/ro?l?l? ([0-9][ygbprkf][ ]*)+)$/g);
+  let regularRollConstraints = new RegExp(/^(\/ro?l?l? (\d*[d]\d*[+]?\d*[ ]*)+)$/g);
+  let starWarsDieConstraints = new RegExp(/(\d+[ygbprkf])/g);
+  let regularDieConstraints = new RegExp(/(\d+[d]\d*[+]?\d*)/g);
 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
-  if (msg.content.search(rollConstraints) == -1){
+  if (msg.content.search(starWarsRollConstraints) == -1 && msg.content.search(regularRollConstraints) == -1){
     msg.channel.sendMessage(msg.author + ' That\'s not a valid command. Please use only 1 - 9 and g y b p r k f. \nEx: \'/roll 1y 2g 3p\'');
     return;
   }
 
-  if (msg.content.startsWith(prefix + "roll") || msg.content.startsWith(prefix + 'r')){
+  if(msg.content.search(regularRollConstraints) != -1 && (msg.content.startsWith(prefix + "roll") || msg.content.startsWith(prefix + 'r'))){
+    var incomingRollCommand = msg.content.replace('/roll ', '').replace('/r ', '');
+
+    var requestedRolls = incomingRollCommand.match(regularDieConstraints);
+
+    var rolledDicePool = [];
+
+    for (var i=0;i<requestedRolls.length;i++){
+      var request = requestedRolls[i];
+      var hasPlus = request.indexOf('+');
+
+      if(hasPlus){
+        var split = request.split('+');
+        request = split[0];
+        var addition = split[1];
+      }
+
+      var dIndex = request.indexOf('d');
+      var numDice = request.substring(0, dIndex);
+      var numSides = request.substring(dIndex+1);
+
+
+      for(var j=0;j<numDice;j++){
+        var numRolled = Math.floor(Math.random() * numSides + 1);
+        rolledDicePool.push(numRolled);
+      }
+    }
+
+    var printString = msg.author + ' rolled ';
+    var finalValue = 0;
+
+    for(var die in rolledDicePool){
+      printString += staticValues.symbols['d20'] + rolledDicePool[die];
+      finalValue += parseInt(rolledDicePool[die]);
+    };
+
+    if(addition){
+      printString += ' + ' + addition;
+      finalValue += parseInt(addition);
+    };
+
+    printString += '\n for a net \n' + finalValue
+
+    msg.channel.sendMessage(printString);
+  }
+
+  if (msg.content.search(starWarsRollConstraints) != -1 && (msg.content.startsWith(prefix + "roll") || msg.content.startsWith(prefix + 'r'))){
     //Trim out the /roll command and split each die type and number of die to roll into an array
 
     var incomingRollCommand = msg.content.replace('/roll ', '').replace('/r ', '');
 
-    var requestedRolls = incomingRollCommand.match(dieConstraints);
+    var requestedRolls = incomingRollCommand.match(starWarsDieConstraints);
 
     var symbolPool = [];
     var rolledDiePool = [];

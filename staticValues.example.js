@@ -11,7 +11,7 @@ module.exports = {
         'Despair': '<:despair:xxxxxxxxxxxxxxxxxx>',
         'Black': '<:darkside:xxxxxxxxxxxxxxxxxx>',
         'White': '<:lightside:xxxxxxxxxxxxxxxxxx>',
-        'Blank': '',
+        'd20': '',
     },
 
     "diceArray" : {
