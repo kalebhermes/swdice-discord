@@ -52,7 +52,7 @@ client.on("message", msg => {
     var finalValue = 0;
 
     for(var die in rolledDicePool){
-      printString += staticValues.symbols['d20'] + rolledDicePool[die];
+      printString += staticValues.symbols['d20'] + rolledDicePool[die] + '   ';;
       finalValue += parseInt(rolledDicePool[die]);
     };
 
