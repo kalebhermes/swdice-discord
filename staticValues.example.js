@@ -3,21 +3,21 @@ module.exports = {
     "botToken" : '',
     
     "symbols" : {
-        'Success': '<:success:273460303755214848>',
-        'Advantage': '<:advantage:273460264039612416>',
-        'Failure': '<:failure:273460289326940171>',
-        'Threat': '<:threat:273460313071026186>',
-        'Triumph': '<:triumph:273460319366545409>',
-        'Despair': '<:despair:273460282309738496>',
-        'Black': '<:darkside:273460274055348225>',
-        'White': '<:lightside:273460296981413888>',
+        'Success': '<:success:xxxxxxxxxxxxxxxxxx>',
+        'Advantage': '<:advantage:xxxxxxxxxxxxxxxxxx>',
+        'Failure': '<:failure:xxxxxxxxxxxxxxxxxx>',
+        'Threat': '<:threat:xxxxxxxxxxxxxxxxxx>',
+        'Triumph': '<:triumph:xxxxxxxxxxxxxxxxxx>',
+        'Despair': '<:despair:xxxxxxxxxxxxxxxxxx>',
+        'Black': '<:darkside:xxxxxxxxxxxxxxxxxx>',
+        'White': '<:lightside:xxxxxxxxxxxxxxxxxx>',
         'Blank': '',
     },
 
     "diceArray" : {
       'g': {
           'sides':8,
-          'emoji':'<:abilitybg:273460177762648074>',
+          'emoji':'<:abilitybg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Blank',
             2: 'Success',
@@ -31,7 +31,7 @@ module.exports = {
         },
       'y': {
           'sides':12,
-          'emoji':'<:proficiencybg:273460214743695360>',
+          'emoji':'<:proficiencybg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Blank',
             2: 'Success',
@@ -49,7 +49,7 @@ module.exports = {
         },
       'b': {
           'sides':6,
-          'emoji':'<:boostbg:273460186272759808>',
+          'emoji':'<:boostbg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Blank',
             2: 'Blank',
@@ -61,7 +61,7 @@ module.exports = {
         },
       'p': {
           'sides':8,
-          'emoji':'<:difficultybg:273460199862435841>',
+          'emoji':'<:difficultybg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Blank',
             2: 'Failure',
@@ -75,7 +75,7 @@ module.exports = {
         },
       'r': {
           'sides':12,
-          'emoji':'<:challengebg:273460192811810817>',
+          'emoji':'<:challengebg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Blank',
             2: 'Failure',
@@ -93,7 +93,7 @@ module.exports = {
         },
       'k': {
           'sides':6,
-          'emoji':'<:setbackbg:273460221458907136>',
+          'emoji':'<:setbackbg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Blank',
             2: 'Blank',
@@ -105,7 +105,7 @@ module.exports = {
         },
       'f': {
           'sides':12,
-          'emoji':'<:forcebg:273460207546400769>',
+          'emoji':'<:forcebg:xxxxxxxxxxxxxxxxxx>',
           'faces':{
             1: 'Black',
             2: 'Black',
