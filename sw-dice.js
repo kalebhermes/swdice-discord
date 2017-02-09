@@ -7,18 +7,18 @@ var client = new Discord.Client();
 
 client.on("message", msg => {
 
-	let prefix = "/";
+  let prefix = "/";
   let rollConstraints = new RegExp(/^(\/ro?l?l? ([0-9][ygbprkf][ ]*)+)$/g);
   let dieConstraints = new RegExp(/(\d+[ygbprkf])/g);
 
-	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+  if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
   if (msg.content.search(rollConstraints) == -1){
     msg.channel.sendMessage(msg.author + ' That\'s not a valid command. Please use only 1 - 9 and g y b p r k f. \nEx: \'/roll 1y 2g 3p\'');
     return;
   }
 
-	if (msg.content.startsWith(prefix + "roll") || msg.content.startsWith(prefix + 'r')){
+  if (msg.content.startsWith(prefix + "roll") || msg.content.startsWith(prefix + 'r')){
     //Trim out the /roll command and split each die type and number of die to roll into an array
 
     var incomingRollCommand = msg.content.replace('/roll ', '').replace('/r ', '');
@@ -30,14 +30,14 @@ client.on("message", msg => {
 
       //itterate on that array
       // this whole thing needs to be rewirtten. 
-    	for (var x=0;x<requestedRolls.length;x++){
+      for (var x=0;x<requestedRolls.length;x++){
         //thisDieType = y,g,b,p,r,k or f
-    		var thisDieType = requestedRolls[x].slice(-1);
-    		var numSides = staticValues.diceArray[thisDieType].sides;
-    		var numDice = requestedRolls[x].substring(0, requestedRolls[x].length - 1);
+        var thisDieType = requestedRolls[x].slice(-1);
+        var numSides = staticValues.diceArray[thisDieType].sides;
+        var numDice = requestedRolls[x].substring(0, requestedRolls[x].length - 1);
 
-    		for(var y=0;y<numDice;y++){
-    			var numberRolledOnDie = Math.floor((Math.random() * numSides) + 1);
+        for(var y=0;y<numDice;y++){
+          var numberRolledOnDie = Math.floor((Math.random() * numSides) + 1);
           var dieValue = staticValues.diceArray[thisDieType].faces[numberRolledOnDie];
           var thisDieText = staticValues.diceArray[thisDieType].emoji;
           var splitDieValue = dieValue.split(' ');
@@ -46,15 +46,15 @@ client.on("message", msg => {
             thisDieText += staticValues.symbols[splitDieValue[xx]];
           }
           rolledDiePool.push(thisDieText);
-    		}
+        }
 
-    		var printString = '';
+        var printString = '';
 
-    		for(var z=0;z<rolledDiePool.length;z++){
-    			printString += rolledDiePool[z] + '   ';
-    		}
+        for(var z=0;z<rolledDiePool.length;z++){
+          printString += rolledDiePool[z] + '   ';
+        }
 
-    	}
+      }
 
       printString += '\nfor a net\n';
 
