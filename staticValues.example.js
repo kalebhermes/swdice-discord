@@ -12,6 +12,7 @@ module.exports = {
         'Black': '<:darkside:xxxxxxxxxxxxxxxxxx>',
         'White': '<:lightside:xxxxxxxxxxxxxxxxxx>',
         'd20': '',
+        'blank': '',
     },
 
     "diceArray" : {
