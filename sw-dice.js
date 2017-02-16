@@ -13,6 +13,10 @@ client.on("message", msg => {
   let starWarsDieConstraints = new RegExp(/(\d+[ygbprkf])/g);
   let regularDieConstraints = new RegExp(/(\d+[d]\d*[+]?\d*)/g);
 
+  if (msg.content.startsWith('Get Server ID')){
+    msg.channel.sendMessage(msg.guild.id);
+  }
+
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
   if (msg.content.search(starWarsRollConstraints) == -1 && msg.content.search(regularRollConstraints) == -1){
@@ -52,7 +56,7 @@ client.on("message", msg => {
     var finalValue = 0;
 
     for(var die in rolledDicePool){
-      printString += staticValues.symbols['d20'] + rolledDicePool[die] + '   ';;
+      printString += staticValues.symbols[msg.guild.id]['d20'] + rolledDicePool[die] + '   ';;
       finalValue += parseInt(rolledDicePool[die]);
     };
 
@@ -87,11 +91,11 @@ client.on("message", msg => {
         for(var y=0;y<numDice;y++){
           var numberRolledOnDie = Math.floor((Math.random() * numSides) + 1);
           var dieValue = staticValues.diceArray[thisDieType].faces[numberRolledOnDie];
-          var thisDieText = staticValues.diceArray[thisDieType].emoji;
+          var thisDieText = staticValues.symbols[msg.guild.id][thisDieType];
           var splitDieValue = dieValue.split(' ');
           for(var xx=0;xx<splitDieValue.length;xx++){
             symbolPool.push(splitDieValue[xx]);
-            thisDieText += staticValues.symbols[splitDieValue[xx]];
+            thisDieText += staticValues.symbols[msg.guild.id][splitDieValue[xx]];
           }
           rolledDiePool.push(thisDieText);
         }
@@ -111,7 +115,7 @@ client.on("message", msg => {
       for(var key in settledSymbols){
         if(settledSymbols[key] != 0){
           for(var yy=0;yy<settledSymbols[key];yy++){
-            printString += staticValues.symbols[key];
+            printString += staticValues.symbols[msg.guild.id][key];
           }
         }
       }
