@@ -1,5 +1,8 @@
 module.exports = {
+  
   "botToken" : '',
+
+  "improperSyntax": ' Something went wrong. Sorry about that. You can roll dice using the following formatting.```/roll 2y 1g 3p\n/r 3d10```Please use `gybprkf` for Star Wars Dice, or `d` for traditional dice.',
 
   "symbols" : {
     //Keys are Guild (Server) ID
