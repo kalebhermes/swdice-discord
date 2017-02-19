@@ -18,10 +18,12 @@ client.on("message", msg => {
 
   if (msg.author.bot){return;};
 
-  if (msg.content.search(rollRegex) == -1 || msg.content.search(finalRegex) == -1 || msg.author.bot){
+  if (msg.content.search(rollRegex) == -1){
+    return;
+  } else if (msg.content.search(rollRegex) != -1 && msg.content.search(finalRegex) == -1){
     msg.channel.sendMessage(msg.author + staticValues.improperSyntax);
     return;
-  } else {
+  } else if (msg.content.search(rollRegex) != -1 && msg.content.search(finalRegex) != -1){
     let incomingRolls = msg.content.match(finalRegex);
     let message = msg.author + ' rolled ';
     let total = 0;
