@@ -11,6 +11,7 @@ client.on("message", msg => {
 
   let finalRegex = new RegExp(/(\d+[d]\d*[+]?\d+)|(\d+[gybprkf])/g);
   var rollRegex = new RegExp(/(\/r(oll)?)/g);
+  var urlRegex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
 
   if (msg.content.startsWith('Get Server ID')){
     msg.channel.sendMessage(msg.guild.id);
@@ -18,7 +19,9 @@ client.on("message", msg => {
 
   if (msg.author.bot){return;};
 
-  if (msg.content.search(rollRegex) == -1){
+  if (msg.content.search(urlRegex) != -1){
+    return;
+  } else if (msg.content.search(rollRegex) == -1){
     return;
   } else if (msg.content.search(rollRegex) != -1 && msg.content.search(finalRegex) == -1){
     msg.channel.sendMessage(msg.author + staticValues.improperSyntax);
