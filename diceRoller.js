@@ -2,10 +2,6 @@ var staticValues = require('./staticValues.js');
 
 var DiceRoller = function(){};
 
-DiceRoller.prototype.sortLowestToHighest = function(a, b) {
-	return a - b;
-};
-
 //Consider pulling total, message and spacer out into the class itself. 
 
 DiceRoller.prototype.rollTraditionalDice = function(command, drop, guildID){
@@ -29,15 +25,17 @@ DiceRoller.prototype.rollTraditionalDice = function(command, drop, guildID){
 
 	if (addition){total += addition; message += ' + '  + addition;};
 
-	rolls = rolls.sort(DiceRoller.sortLowestToHighest);
+	sortedRolls = new Uint32Array(rolls);
+	sortedRolls.sort();
 
 	if(drop == 'l'){
-		total = total - rolls[0];
-		message += ' and dropping the lowest roll of ' + rolls[0];
+		total = total - sortedRolls[0];
+		message += ' and dropping the lowest roll of ' + sortedRolls[0];
 	}
 	else if(drop == 'h'){
-		total = total - rolls[rolls.length-1];
-		message += ' and dropping the highest roll of ' + rolls[rolls.length-1];
+		highestRoll = sortedRolls.pop();
+		total = total - sortedRolls[highestRoll];
+		message += ' and dropping the highest roll of ' + sortedRolls[highestRoll];
 	}
 
 	return {'message':message, 'total':total};

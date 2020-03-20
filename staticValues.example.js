@@ -2,7 +2,7 @@ module.exports = {
   
   "botToken" : '',
 
-  "improperSyntax": ' Something went wrong. Sorry about that. You can roll dice using the following formatting.```/roll 2y 1g 3p\n/r 3d10```Please use `gybprkf` for Star Wars Dice, or `d` for traditional dice.',
+  "improperSyntax": ' Something went wrong. Sorry about that. You can roll dice using the following formatting.```/roll 2y 1g 3p\n/r 3d10( + 5)```Please use `gybprkf` for Star Wars Dice, or `d` for traditional dice. You can also append your traditional dice rolls with `!dl` or `!dh` to drop the lowest or highest rolls from the pool.',
 
   "symbols" : {
     //Keys are Guild (Server) ID
