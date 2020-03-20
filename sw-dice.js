@@ -7,6 +7,11 @@ var DiceRoller = require("./diceRoller.js");
 var ValueParser = require('./valueParser.js');
 var client = new Discord.Client();
 
+const dropEnum = {
+  LOWEST: 'l',
+  HIGHEST: 'h',
+};
+
 client.on("message", msg => {
 
   let finalRegex = new RegExp(/(\d+[d]\d* *[+]? *\d+( *\!d[lh])*)|(\d+[gybprkf])/g);
@@ -32,10 +37,31 @@ client.on("message", msg => {
     let total = 0;
     let values = [];
     let spacer = '   ';
+    let drop = false;
+    let dropState;
+
+    for(let die of incomingRolls){
+      if(die.includes('!')){
+        drop = true;
+        if(die.includes('h')) dropState = dropEnum.HIGHEST;
+        else if(die.includes('l')) dropState = dropEnum.LOWEST;
+
+        die = die.replace('!dl', '').replace('!dh').trim();
+      } 
+    }
 
     for(let die in incomingRolls){
       if(incomingRolls[die].indexOf('d') != -1){
-        let temp = DiceRoller.rollTraditionalDice(incomingRolls[die], msg.guild.id);
+
+        if(incomingRolls[die].includes('!')){
+          drop = true;
+          if(incomingRolls[die].includes('h')) dropState = dropEnum.HIGHEST;
+          else if(incomingRolls[die].includes('l')) dropState = dropEnum.LOWEST;
+
+          incomingRolls[die] = incomingRolls[die].replace('!dl', '').replace('!dh', '').trim();
+        }
+
+        let temp = DiceRoller.rollTraditionalDice(incomingRolls[die], dropState, msg.guild.id);
         message += temp.message + spacer;
         total += temp.total;
       } else {
