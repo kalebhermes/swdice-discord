@@ -9,7 +9,7 @@ var client = new Discord.Client();
 
 client.on("message", msg => {
 
-  let finalRegex = new RegExp(/(\d+[d]\d*[+]?\d+)|(\d+[gybprkf])/g);
+  let finalRegex = new RegExp(/(\d+[d]\d* *[+]? *\d+( *\!d[lh])*)|(\d+[gybprkf])/g);
   var rollRegex = new RegExp(/(\/r(oll)?)/g);
   var urlRegex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
 
